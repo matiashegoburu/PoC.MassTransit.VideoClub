@@ -44,7 +44,7 @@ namespace VideoClub.Server.Console
             _container = new UnityContainer();
 
             // register each consumer
-            _container.RegisterType<CreateTituloConsumer>();
+            _container.RegisterType<TituloConsumer>();
 
             _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
@@ -56,7 +56,7 @@ namespace VideoClub.Server.Console
 
                 cfg.ReceiveEndpoint("titulos_queue", ec =>
                 {
-                    ec.Consumer(() => _container.Resolve<CreateTituloConsumer>());
+                    ec.Consumer(() => _container.Resolve<TituloConsumer>());
                 });
             });
 

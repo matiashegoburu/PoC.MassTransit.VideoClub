@@ -8,12 +8,12 @@ using VideoClub.Repositories;
 
 namespace VideoClub.Consumers.Titulos
 {
-    public class CreateTituloConsumer : IConsumer<CreateTituloMessage>
+    public class TituloConsumer : IConsumer<CreateTituloMessage>
     {
         private readonly TitulosRepository _repository;
         private readonly IMapper _mapper;
 
-        public CreateTituloConsumer(TitulosRepository repository, IMapper mapper)
+        public TituloConsumer(TitulosRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

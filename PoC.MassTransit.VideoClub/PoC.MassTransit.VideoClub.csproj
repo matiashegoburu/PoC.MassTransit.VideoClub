@@ -247,6 +247,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VideoClub.Common\VideoClub.Common.csproj">
+      <Project>{444645e5-57d9-4449-9e12-f44850568f75}</Project>
+      <Name>VideoClub.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoClub.Consumers\VideoClub.Consumers.csproj">
       <Project>{506523f8-49cc-455a-a965-c6a613e94344}</Project>
       <Name>VideoClub.Consumers</Name>

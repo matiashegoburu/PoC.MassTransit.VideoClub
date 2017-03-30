@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using VideoClub.Common;
 using VideoClub.Messages.Titulos;
 
 namespace PoC.MassTransit.VideoClub.Controllers
@@ -51,7 +52,7 @@ namespace PoC.MassTransit.VideoClub.Controllers
                     Genero = model.Genero
                 };
 
-                var sendEnpoint = await _bus.GetSendEndpoint(new Uri("rabbitmq://localhost/titulos_queue"));
+                var sendEnpoint = await _bus.GetSendEndpoint(Endpoints.Titulos);
                 await sendEnpoint.Send<CreateTituloMessage>(message);
                 return RedirectToAction("Index");
             }
