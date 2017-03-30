@@ -1,17 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace VideoClub.Repositories
 {
-    public abstract class BaseRepository<TEntity>
+    public interface IBaseRepository<TEntity>
     {
-        protected readonly IDbConnection _cnn;
-
-        public BaseRepository(IDbConnection cnn)
-        {
-            _cnn = cnn;
-        }
-
-        public abstract void Create(TEntity entity);
+        void Create(TEntity entity);
+        List<TEntity> List();
     }
 }

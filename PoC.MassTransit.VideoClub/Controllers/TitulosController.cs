@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+using MassTransit;
 using PoC.MassTransit.VideoClub.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VideoClub.Common;
+using VideoClub.Entities;
 using VideoClub.Messages;
 using VideoClub.Messages.Titulos;
 
@@ -16,15 +18,26 @@ namespace PoC.MassTransit.VideoClub.Controllers
     public class TitulosController : Controller
     {
         private readonly IBus _bus;
+        private readonly IMapper _mapper;
 
-        public TitulosController(IBus bus)
+        public TitulosController(IBus bus, IMapper mapper)
         {
             _bus = bus;
+            _mapper = mapper;
         }
 
         // GET: Titulos
-        public ActionResult Index()
+        public async Task<ActionResult> Index(CancellationToken token)
         {
+            var client = new MessageRequestClient<ListTitulosMessage, Response<List<TituloEntity>>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(30));
+            var response = await client.Request(new ListTitulosCommand(), token);
+
+            if (response.Success)
+            {
+                var models = _mapper.Map<List<TituloEntity>, List<TituloModel>>(response.Data);
+                return View(models);
+            }
+
             return View();
         }
 

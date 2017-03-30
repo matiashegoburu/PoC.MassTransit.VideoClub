@@ -10,6 +10,7 @@ using System.Data;
 using System.IO;
 using AutoMapper;
 using PoC.MassTransit.VideoClub.Models;
+using VideoClub.Entities;
 
 namespace PoC.MassTransit.VideoClub.App_Start
 {
@@ -69,6 +70,7 @@ namespace PoC.MassTransit.VideoClub.App_Start
             var config = new MapperConfiguration(c =>
             {
                 c.CreateMap<TituloModel, CreateTituloCommand>();
+                c.CreateMap<TituloEntity, TituloModel>();
             });
 
             container.RegisterInstance(config.CreateMapper());

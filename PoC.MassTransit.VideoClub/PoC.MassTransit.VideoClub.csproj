@@ -236,6 +236,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Titulos\Create.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Titulos\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -254,6 +255,10 @@
     <ProjectReference Include="..\VideoClub.Consumers\VideoClub.Consumers.csproj">
       <Project>{506523f8-49cc-455a-a965-c6a613e94344}</Project>
       <Name>VideoClub.Consumers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoClub.Entities\VideoClub.Entities.csproj">
+      <Project>{9d9a6436-9b8d-43e3-9386-fb855a471b04}</Project>
+      <Name>VideoClub.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\VideoClub.Messages\VideoClub.Messages.csproj">
       <Project>{49746d5a-1f4c-4f48-9ff8-addb2710ad8a}</Project>
