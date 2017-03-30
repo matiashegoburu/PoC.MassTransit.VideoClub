@@ -3,6 +3,7 @@ using MassTransit;
 using System;
 using System.Threading.Tasks;
 using VideoClub.Entities;
+using VideoClub.Messages;
 using VideoClub.Messages.Titulos;
 using VideoClub.Repositories;
 
@@ -23,6 +24,8 @@ namespace VideoClub.Consumers.Titulos
         {
             var entity = _mapper.Map<CreateTituloMessage, TituloEntity>(context.Message);
             _repository.Create(entity);
+
+            context.Respond<Response<bool>>(new ResponseMessage<bool> { Success = true });
             return context.CompleteTask;
         }
     }

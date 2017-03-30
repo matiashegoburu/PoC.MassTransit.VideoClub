@@ -3,10 +3,12 @@ using PoC.MassTransit.VideoClub.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VideoClub.Common;
+using VideoClub.Messages;
 using VideoClub.Messages.Titulos;
 
 namespace PoC.MassTransit.VideoClub.Controllers
@@ -40,7 +42,7 @@ namespace PoC.MassTransit.VideoClub.Controllers
 
         // POST: Titulos/Create
         [HttpPost]
-        public async Task<ActionResult> Create(TituloModel model)
+        public async Task<ActionResult> Create(TituloModel model, CancellationToken token)
         {
             try
             {
@@ -53,8 +55,10 @@ namespace PoC.MassTransit.VideoClub.Controllers
                 };
 
                 var sendEnpoint = await _bus.GetSendEndpoint(Endpoints.Titulos);
-                await sendEnpoint.Send<CreateTituloMessage>(message);
-                return RedirectToAction("Index");
+                var client = new MessageRequestClient<CreateTituloCommand, Response<bool>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(10));
+                //await sendEnpoint.Send<CreateTituloMessage>(message);
+                var response = await client.Request(message, token);
+                return View();
             }
             catch(Exception e)
             {
