@@ -76,7 +76,7 @@ namespace VideoClub.Server.Console
             _cnn = SimpleDbConnection();
             if (dbNeedsInitialize)
             {
-                CreateDatabase(_cnn);
+                CreateDatabase(_cnn as SQLiteConnection);
             }
 
             _container.RegisterInstance<IDbConnection>(_cnn);
@@ -103,19 +103,24 @@ namespace VideoClub.Server.Console
             return new SQLiteConnection("Data Source=" + DbFile);
         }
 
-        private static void CreateDatabase(IDbConnection cnn)
+        private static async void CreateDatabase(SQLiteConnection cnn)
         {
-            using (var command = cnn.CreateCommand())
-            {
-                command.CommandText =
-                    @"CREATE TABLE Titulos (
+            await cnn.OpenAsync();
+
+            var sql =
+                @"CREATE TABLE Titulos (
                         ID          INTEGER PRIMARY KEY AUTOINCREMENT,
                         Titulo      STRING,
                         Descripcion STRING,
                         Genero      STRING
                     );";
+
+            using (var command = new SQLiteCommand(sql, cnn as SQLiteConnection))
+            {
                 command.ExecuteNonQuery();
             }
+
+            cnn.Close();
         }
     }
 }
