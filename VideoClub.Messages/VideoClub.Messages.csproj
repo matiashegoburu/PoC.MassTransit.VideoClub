@@ -49,6 +49,10 @@
     <Compile Include="Titulos\Responses\CreateTituloResponse.cs" />
     <Compile Include="Titulos\Responses\ListTituloResponse.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rentals\Commands\" />
+    <Folder Include="Rentals\Responses\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
