@@ -1,16 +1,16 @@
-﻿namespace VideoClub.Messages.Titulos
+﻿namespace VideoClub.Messages.Titles
 {
-    public interface CreateTituloMessage
+    public interface CreateTitleMessage
     {
-        string Titulo { get; }
-        string Descripcion { get; }
-        string Genero { get; }
+        string Title { get; }
+        string Description { get; }
+        string Category { get; }
     }
 
-    public class CreateTituloCommand : CreateTituloMessage
+    public class CreateTitleCommand : CreateTitleMessage
     {
-        public string Titulo { get; set; }
-        public string Descripcion { get; set; }
-        public string Genero { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Category { get; set; }
     }
 }

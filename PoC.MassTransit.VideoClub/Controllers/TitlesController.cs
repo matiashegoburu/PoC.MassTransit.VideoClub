@@ -11,65 +11,65 @@ using System.Web.Mvc;
 using VideoClub.Common;
 using VideoClub.Entities;
 using VideoClub.Messages;
-using VideoClub.Messages.Titulos;
+using VideoClub.Messages.Titles;
 
 namespace PoC.MassTransit.VideoClub.Controllers
 {
-    public class TitulosController : Controller
+    public class TitlesController : Controller
     {
         private readonly IBus _bus;
         private readonly IMapper _mapper;
 
-        public TitulosController(IBus bus, IMapper mapper)
+        public TitlesController(IBus bus, IMapper mapper)
         {
             _bus = bus;
             _mapper = mapper;
         }
 
-        // GET: Titulos
+        // GET: Titles
         public async Task<ActionResult> Index(CancellationToken token)
         {
-            var client = new MessageRequestClient<ListTitulosCommand, Response<List<TituloEntity>>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(30));
-            var response = await client.Request(new ListTitulosCommand(), token);
+            var client = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
+            var response = await client.Request(new ListTitlesCommand(), token);
 
             if (response.Success)
             {
-                var models = _mapper.Map<List<TituloEntity>, List<TituloModel>>(response.Data);
+                var models = _mapper.Map<List<TitleEntity>, List<TitleModel>>(response.Data);
                 return View(models);
             }
 
             return View();
         }
 
-        // GET: Titulos/Details/5
+        // GET: Titles/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Titulos/Create
+        // GET: Titles/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Titulos/Create
+        // POST: Titles/Create
         [HttpPost]
-        public async Task<ActionResult> Create(TituloModel model, CancellationToken token)
+        public async Task<ActionResult> Create(TitleModel model, CancellationToken token)
         {
             try
             {
                 // TODO: Add insert logic here
-                var message = new CreateTituloCommand
+                var message = new CreateTitleCommand
                 {
-                    Titulo = model.Titulo,
-                    Descripcion = model.Descripcion,
-                    Genero = model.Genero
+                    Title = model.Title,
+                    Description = model.Description,
+                    Category = model.Category
                 };
 
-                var sendEnpoint = await _bus.GetSendEndpoint(Endpoints.Titulos);
-                var client = new MessageRequestClient<CreateTituloCommand, Response<bool>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(10));
-                //await sendEnpoint.Send<CreateTituloMessage>(message);
+                var sendEnpoint = await _bus.GetSendEndpoint(Endpoints.Titles);
+                var client = new MessageRequestClient<CreateTitleCommand, Response<bool>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(10));
+                //await sendEnpoint.Send<CreateTitleMessage>(message);
                 var response = await client.Request(message, token);
                 return View();
             }
@@ -79,13 +79,13 @@ namespace PoC.MassTransit.VideoClub.Controllers
             }
         }
 
-        // GET: Titulos/Edit/5
+        // GET: Titles/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Titulos/Edit/5
+        // POST: Titles/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -101,13 +101,13 @@ namespace PoC.MassTransit.VideoClub.Controllers
             }
         }
 
-        // GET: Titulos/Delete/5
+        // GET: Titles/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Titulos/Delete/5
+        // POST: Titles/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

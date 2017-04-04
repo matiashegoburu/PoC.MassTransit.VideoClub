@@ -3,8 +3,8 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using MassTransit;
 using MassTransit.UnityIntegration;
-using VideoClub.Messages.Titulos;
-using VideoClub.Consumers.Titulos;
+using VideoClub.Messages.Titles;
+using VideoClub.Consumers.Titles;
 using System.Data.SQLite;
 using System.Data;
 using System.IO;
@@ -43,7 +43,7 @@ namespace PoC.MassTransit.VideoClub.App_Start
         /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
         public static void RegisterTypes(IUnityContainer container)
         {           
-            container.RegisterType<IConsumer<CreateTituloCommand>, TituloConsumer>();
+            container.RegisterType<IConsumer<CreateTitleCommand>, TitleConsumer>();
 
             CreateBus(container);
             SetupAutoMapper(container);
@@ -70,8 +70,8 @@ namespace PoC.MassTransit.VideoClub.App_Start
         {
             var config = new MapperConfiguration(c =>
             {
-                c.CreateMap<TituloModel, CreateTituloCommand>();
-                c.CreateMap<TituloEntity, TituloModel>();
+                c.CreateMap<TitleModel, CreateTitleCommand>();
+                c.CreateMap<TitleEntity, TitleModel>();
 
                 c.CreateMap<RentalModel, CreateRentalCommand>();
             });

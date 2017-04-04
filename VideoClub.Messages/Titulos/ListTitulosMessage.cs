@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace VideoClub.Messages.Titulos
+namespace VideoClub.Messages.Titles
 {
-    public class ListTitulosCommand
+    public interface ListTitlesMessage
+    {        
+    }
+
+    public class ListTitlesCommand : ListTitlesMessage
     {
     }
 }
