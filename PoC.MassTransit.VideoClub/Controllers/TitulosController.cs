@@ -29,7 +29,7 @@ namespace PoC.MassTransit.VideoClub.Controllers
         // GET: Titulos
         public async Task<ActionResult> Index(CancellationToken token)
         {
-            var client = new MessageRequestClient<ListTitulosMessage, Response<List<TituloEntity>>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(30));
+            var client = new MessageRequestClient<ListTitulosCommand, Response<List<TituloEntity>>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(30));
             var response = await client.Request(new ListTitulosCommand(), token);
 
             if (response.Success)

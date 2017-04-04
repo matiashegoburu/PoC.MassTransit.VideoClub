@@ -13,7 +13,7 @@ namespace VideoClub.Consumers.Titulos
 {
     public class TituloConsumer : 
         IConsumer<CreateTituloMessage>
-        , IConsumer<ListTitulosMessage>
+        , IConsumer<ListTitulosCommand>
     {
         private readonly TitulosRepository _repository;
         private readonly IMapper _mapper;
@@ -33,7 +33,7 @@ namespace VideoClub.Consumers.Titulos
             return context.CompleteTask;
         }
 
-        public async Task Consume(ConsumeContext<ListTitulosMessage> context)
+        public async Task Consume(ConsumeContext<ListTitulosCommand> context)
         {
             var entities = _repository.List();
             var response = new ResponseMessage<List<TituloEntity>> { Data = entities, Success = true };

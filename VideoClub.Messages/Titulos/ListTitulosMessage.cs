@@ -2,11 +2,7 @@
 
 namespace VideoClub.Messages.Titulos
 {
-    public interface ListTitulosMessage
-    {        
-    }
-
-    public class ListTitulosCommand : ListTitulosMessage
+    public class ListTitulosCommand
     {
     }
 }
