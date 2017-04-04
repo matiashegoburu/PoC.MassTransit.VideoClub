@@ -13,6 +13,7 @@ using VideoClub.Entities;
 using VideoClub.Messages;
 using VideoClub.Messages.Rentals.Commands;
 using VideoClub.Messages.Rentals.Responses;
+using VideoClub.Messages.Titles;
 using VideoClub.Messages.Titulos;
 
 namespace PoC.MassTransit.VideoClub.Controllers
@@ -47,8 +48,8 @@ namespace PoC.MassTransit.VideoClub.Controllers
         // GET: Rentals/Create
         public async Task<ActionResult> Create(CancellationToken token)
         {
-            var titlesClient = new MessageRequestClient<ListTitulosCommand, Response<List<TituloEntity>>>(_bus, Endpoints.Titulos, TimeSpan.FromSeconds(30));
-            var response = await titlesClient.Request(new ListTitulosCommand(), token);
+            var titlesClient = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
+            var response = await titlesClient.Request(new ListTitlesCommand(), token);
             ViewBag.Titulos = response.Data;
 
             return View();

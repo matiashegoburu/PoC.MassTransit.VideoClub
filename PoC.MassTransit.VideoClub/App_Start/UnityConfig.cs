@@ -74,6 +74,7 @@ namespace PoC.MassTransit.VideoClub.App_Start
                 c.CreateMap<TitleEntity, TitleModel>();
 
                 c.CreateMap<RentalModel, CreateRentalCommand>();
+                c.CreateMap<RentalEntity, RentalModel>();
             });
 
             container.RegisterInstance(config.CreateMapper());
