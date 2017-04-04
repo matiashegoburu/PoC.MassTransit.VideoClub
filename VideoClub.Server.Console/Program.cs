@@ -6,9 +6,9 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading.Tasks;
-using VideoClub.Consumers.Titulos;
+using VideoClub.Consumers.Titles;
 using VideoClub.Entities;
-using VideoClub.Messages.Titulos;
+using VideoClub.Messages.Titles;
 
 namespace VideoClub.Server.Console
 {
@@ -44,7 +44,7 @@ namespace VideoClub.Server.Console
             _container = new UnityContainer();
 
             // register each consumer
-            _container.RegisterType<TituloConsumer>();
+            _container.RegisterType<TitleConsumer>();
 
             _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
@@ -54,9 +54,9 @@ namespace VideoClub.Server.Console
                     h.Password("guest");
                 });
 
-                cfg.ReceiveEndpoint("titulos_queue", ec =>
+                cfg.ReceiveEndpoint("titles_queue", ec =>
                 {
-                    ec.Consumer(() => _container.Resolve<TituloConsumer>());
+                    ec.Consumer(() => _container.Resolve<TitleConsumer>());
                 });
             });
 
@@ -86,7 +86,7 @@ namespace VideoClub.Server.Console
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CreateTituloMessage, TituloEntity>();
+                cfg.CreateMap<CreateTitleMessage, TitleEntity>();
             });
 
             _container.RegisterInstance(config.CreateMapper());
@@ -108,11 +108,11 @@ namespace VideoClub.Server.Console
             await cnn.OpenAsync();
 
             var sql =
-                @"CREATE TABLE Titulos (
+                @"CREATE TABLE Titles (
                         ID          INTEGER PRIMARY KEY AUTOINCREMENT,
-                        Titulo      STRING,
-                        Descripcion STRING,
-                        Genero      STRING
+                        Title      STRING,
+                        Description STRING,
+                        Category      STRING
                     );";
 
             using (var command = new SQLiteCommand(sql, cnn as SQLiteConnection))

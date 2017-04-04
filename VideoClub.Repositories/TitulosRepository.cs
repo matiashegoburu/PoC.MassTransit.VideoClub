@@ -5,23 +5,23 @@ using System.Collections.Generic;
 
 namespace VideoClub.Repositories
 {
-    public class TitulosRepository : IBaseRepository<TituloEntity>
+    public class TitlesRepository : IBaseRepository<TitleEntity>
     {
         private readonly IDbConnection _cnn;
 
-        public TitulosRepository(IDbConnection cnn)
+        public TitlesRepository(IDbConnection cnn)
         {
             _cnn = cnn;
         }
 
-        public void Create(TituloEntity entity)
+        public void Create(TitleEntity entity)
         {
-            _cnn.Execute("INSERT INTO Titulos(Titulo, Descripcion, Genero) VALUES(@titulo, @descripcion, @genero)", new { titulo = entity.Titulo, descripcion = entity.Descripcion, genero = entity.Genero });
+            _cnn.Execute("INSERT INTO Titles(Title, Description, Category) VALUES(@title, @description, @category)", new { title = entity.Title, description = entity.Description, category = entity.Category });
         }
 
-        public List<TituloEntity> List()
+        public List<TitleEntity> List()
         {
-            return _cnn.Query<TituloEntity>("SELECT * FROM Titulos").AsList();
+            return _cnn.Query<TitleEntity>("SELECT * FROM Titles").AsList();
         }
     }
 }
