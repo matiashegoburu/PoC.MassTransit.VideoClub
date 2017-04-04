@@ -26,7 +26,7 @@ namespace VideoClub.Consumers.Rentals
         {
             var entity = _mapper.Map<ICreateRentalCommand, RentalEntity>(context.Message);
             _repository.Create(entity);
-            context.Respond<ICreateRentalResponse>(new CreateRentalResponse { Data = true });
+            context.Respond<ICreateRentalResponse>(new CreateRentalResponse { Data = true, Success = true });
             return context.CompleteTask;
         }
 

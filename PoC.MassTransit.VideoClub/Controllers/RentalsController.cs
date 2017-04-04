@@ -48,10 +48,7 @@ namespace PoC.MassTransit.VideoClub.Controllers
         // GET: Rentals/Create
         public async Task<ActionResult> Create(CancellationToken token)
         {
-            var titlesClient = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
-            var response = await titlesClient.Request(new ListTitlesCommand(), token);
-            ViewBag.Titulos = response.Data;
-
+            await PopulateTitlesInViewBag(token);
             return View();
         }
 
@@ -59,6 +56,7 @@ namespace PoC.MassTransit.VideoClub.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(RentalModel model, CancellationToken token)
         {
+            await PopulateTitlesInViewBag(token);
             try
             {
                 // TODO: Add insert logic here
@@ -119,6 +117,13 @@ namespace PoC.MassTransit.VideoClub.Controllers
             {
                 return View();
             }
+        }
+
+        private async Task PopulateTitlesInViewBag(CancellationToken token)
+        {
+            var titlesClient = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
+            var response = await titlesClient.Request(new ListTitlesCommand(), token);
+            ViewBag.Titulos = response.Data.Select(_ => new SelectListItem { Text = _.Title, Value = _.Id.ToString() });
         }
     }
 }
