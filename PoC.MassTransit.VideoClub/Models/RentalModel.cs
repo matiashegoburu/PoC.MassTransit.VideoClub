@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VideoClub.Entities
+namespace PoC.MassTransit.VideoClub.Models
 {
-    public class RentalEntity
+    public class RentalModel
     {
         public int Id { get; set; }
-        public int TitleId { get; set; }
         public int MemberId { get; set; }
+        public int TitleId { get; set; }
         public DateTime FromDate { get; set; }
     }
 }
