@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using VideoClub.Consumers.Titulos;
 using VideoClub.Entities;
+using VideoClub.Messages.Rentals.Commands;
 using VideoClub.Messages.Titulos;
 
 namespace VideoClub.Server.Console
@@ -87,6 +88,7 @@ namespace VideoClub.Server.Console
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CreateTituloMessage, TituloEntity>();
+                cfg.CreateMap<ICreateRentalCommand, RentalEntity>();
             });
 
             _container.RegisterInstance(config.CreateMapper());

@@ -43,6 +43,10 @@
     <Compile Include="Class1.cs" />
     <Compile Include="KeyValueItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rentals\Commands\CreateRentalCommand.cs" />
+    <Compile Include="Rentals\Commands\ListRentalsCommand.cs" />
+    <Compile Include="Rentals\Responses\CreateRentalResponse.cs" />
+    <Compile Include="Rentals\Responses\ListRentalsResponse.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Titulos\CreateTituloMessage.cs" />
     <Compile Include="Titulos\ListTitulosMessage.cs" />
@@ -50,8 +54,10 @@
     <Compile Include="Titulos\Responses\ListTituloResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rentals\Commands\" />
-    <Folder Include="Rentals\Responses\" />
+    <ProjectReference Include="..\VideoClub.Entities\VideoClub.Entities.csproj">
+      <Project>{9d9a6436-9b8d-43e3-9386-fb855a471b04}</Project>
+      <Name>VideoClub.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
