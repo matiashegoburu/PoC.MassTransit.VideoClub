@@ -64,7 +64,7 @@
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
     <Compile Include="RentalsRepository.cs" />
-    <Compile Include="TitulosRepository.cs" />
+    <Compile Include="TitlesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

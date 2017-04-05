@@ -47,10 +47,10 @@
     <Compile Include="Rentals\Responses\CreateRentalResponse.cs" />
     <Compile Include="Rentals\Responses\ListRentalsResponse.cs" />
     <Compile Include="Response.cs" />
-    <Compile Include="Titulos\CreateTituloMessage.cs" />
-    <Compile Include="Titulos\ListTitulosMessage.cs" />
-    <Compile Include="Titulos\Responses\CreateTituloResponse.cs" />
-    <Compile Include="Titulos\Responses\ListTituloResponse.cs" />
+    <Compile Include="Titulos\CreateTitleMessage.cs" />
+    <Compile Include="Titulos\ListTitlesMessage.cs" />
+    <Compile Include="Titulos\Responses\CreateTitlesResponse.cs" />
+    <Compile Include="Titulos\Responses\ListTitleResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VideoClub.Entities\VideoClub.Entities.csproj">

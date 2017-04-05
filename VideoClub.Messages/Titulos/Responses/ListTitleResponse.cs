@@ -7,7 +7,7 @@ using VideoClub.Entities;
 
 namespace VideoClub.Messages.Titulos.Responses
 {
-    public class ListTituloResponse : ResponseMessage<List<TitleEntity>>
+    public class ListTitleResponse : ResponseMessage<List<TitleEntity>>
     {
     }
 }

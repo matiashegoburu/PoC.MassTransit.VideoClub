@@ -225,7 +225,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\RentalModel.cs" />
-    <Compile Include="Models\TituloModel.cs" />
+    <Compile Include="Models\TitleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

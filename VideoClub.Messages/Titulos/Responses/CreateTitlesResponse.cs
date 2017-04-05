@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoClub.Messages.Titulos.Responses
 {
-    public class CreateTituloResponse : ResponseMessage<bool>
+    public class CreateTitlesResponse : ResponseMessage<bool>
     {
     }
 }
