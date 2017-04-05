@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KeyValueItem.cs" />
+    <Compile Include="Members\Commands\CreateMemberCommand.cs" />
+    <Compile Include="Members\Commands\ListMembersCommand.cs" />
+    <Compile Include="Members\Responses\CreateMemberResponse.cs" />
+    <Compile Include="Members\Responses\ListMembersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rentals\Commands\CreateRentalCommand.cs" />
     <Compile Include="Rentals\Commands\ListRentalsCommand.cs" />
@@ -64,6 +68,7 @@
       <Name>VideoClub.Entities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

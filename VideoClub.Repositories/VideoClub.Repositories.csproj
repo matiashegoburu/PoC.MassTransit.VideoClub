@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="MembersRepository.cs" />
     <Compile Include="RentalsRepository.cs" />
     <Compile Include="TitlesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

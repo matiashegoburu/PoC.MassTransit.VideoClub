@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using MassTransit;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using VideoClub.Entities;
 using VideoClub.Messages;
