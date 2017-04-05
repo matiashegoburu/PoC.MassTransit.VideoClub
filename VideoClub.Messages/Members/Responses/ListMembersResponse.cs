@@ -9,7 +9,7 @@ namespace VideoClub.Messages.Members.Responses
 {
     public class ListMembersResponse : ResponseMessage<List<MemberEntity>>, IListMembersResponse { }
 
-    public interface IListMembersResponse
+    public interface IListMembersResponse : Response<List<MemberEntity>>
     {
     }
 }

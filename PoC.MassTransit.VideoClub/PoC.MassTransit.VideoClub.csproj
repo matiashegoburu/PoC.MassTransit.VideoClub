@@ -219,11 +219,13 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Controllers\TitlesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\RentalModel.cs" />
     <Compile Include="Models\TitleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,6 +243,7 @@
     <Content Include="Views\Titles\Index.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
     <Content Include="Views\Rentals\Create.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

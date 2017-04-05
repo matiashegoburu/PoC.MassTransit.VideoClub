@@ -11,6 +11,8 @@ using VideoClub.Entities;
 using VideoClub.Messages.Titles;
 using VideoClub.Messages.Rentals.Commands;
 using VideoClub.Consumers.Rentals;
+using VideoClub.Consumers.Members;
+using VideoClub.Messages.Members.Commands;
 
 namespace VideoClub.Server.Console
 {
@@ -66,6 +68,11 @@ namespace VideoClub.Server.Console
                     ec.Consumer(() => _container.Resolve<RentalsConsumer>());
                 });
 
+                cfg.ReceiveEndpoint("members_queue", ec =>
+                {
+                    ec.Consumer(() => _container.Resolve<MembersConsumer>());
+                });
+
             });
 
             _container.RegisterInstance<IBus>(_bus);
@@ -96,6 +103,7 @@ namespace VideoClub.Server.Console
             {
                 cfg.CreateMap<CreateTitleMessage, TitleEntity>();
                 cfg.CreateMap<ICreateRentalCommand, RentalEntity>();
+                cfg.CreateMap<ICreateMemberCommand, MemberEntity>();
             });
 
             _container.RegisterInstance(config.CreateMapper());

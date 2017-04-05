@@ -8,82 +8,79 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using VideoClub.Common;
 using VideoClub.Entities;
-using VideoClub.Messages;
-using VideoClub.Messages.Titles;
+using VideoClub.Messages.Members.Commands;
+using VideoClub.Messages.Members.Responses;
 
 namespace PoC.MassTransit.VideoClub.Controllers
 {
-    public class TitlesController : Controller
+    public class MembersController : Controller
     {
         private readonly IBus _bus;
         private readonly IMapper _mapper;
 
-        public TitlesController(IBus bus, IMapper mapper)
+        public MembersController(IBus bus, IMapper mapper)
         {
             _bus = bus;
             _mapper = mapper;
         }
 
-        // GET: Titles
+        // GET: Members
         public async Task<ActionResult> Index(CancellationToken token)
         {
-            var client = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
-            var response = await client.Request(new ListTitlesCommand(), token);
+            var client = new MessageRequestClient<IListMembersCommand, IListMembersResponse>(_bus, Endpoints.Members, TimeSpan.FromSeconds(10));
+            var response = await client.Request(new ListMembersCommand(), token);
 
             if (response.Success)
             {
-                var models = _mapper.Map<List<TitleEntity>, List<TitleModel>>(response.Data);
+                var models = _mapper.Map<List<MemberEntity>, List<MemberModel>>(response.Data);
+
                 return View(models);
             }
 
             return View();
         }
 
-        // GET: Titles/Details/5
+        // GET: Members/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Titles/Create
-        public ActionResult Create()
+        // GET: Members/Create
+        public async Task<ActionResult> Create(CancellationToken token)
         {
             return View();
         }
 
-        // POST: Titles/Create
+        // POST: Members/Create
         [HttpPost]
-        public async Task<ActionResult> Create(TitleModel model, CancellationToken token)
+        public async Task<ActionResult> Create(RentalModel model, CancellationToken token)
         {
             try
             {
                 // TODO: Add insert logic here
-                var message = new CreateTitleCommand
-                {
-                    Title = model.Title,
-                    Description = model.Description,
-                    Category = model.Category
-                };
+                var client = new MessageRequestClient<ICreateMemberCommand, ICreateMemberResponse>(_bus, Endpoints.Members, TimeSpan.FromSeconds(10));
+                var command = _mapper.Map<RentalModel, CreateMemberCommand>(model);
+                var response = await client.Request(command, token);
 
-                var sendEnpoint = await _bus.GetSendEndpoint(Endpoints.Titles);
-                var client = new MessageRequestClient<CreateTitleCommand, Response<bool>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(10));
-                //await sendEnpoint.Send<CreateTitleMessage>(message);
-                var response = await client.Request(message, token);
-                return View();
+                if (response.Success)
+                    return RedirectToAction("Index");
+                else
+                    return View();
             }
-            catch(Exception e)
+            catch
             {
                 return View();
             }
         }
 
-        // GET: Titles/Edit/5
+        // GET: Members/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Titles/Edit/5
+        // POST: Members/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -99,13 +96,13 @@ namespace PoC.MassTransit.VideoClub.Controllers
             }
         }
 
-        // GET: Titles/Delete/5
+        // GET: Members/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Titles/Delete/5
+        // POST: Members/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

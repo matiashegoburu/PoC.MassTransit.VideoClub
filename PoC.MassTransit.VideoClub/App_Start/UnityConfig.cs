@@ -12,6 +12,7 @@ using AutoMapper;
 using PoC.MassTransit.VideoClub.Models;
 using VideoClub.Entities;
 using VideoClub.Messages.Rentals.Commands;
+using VideoClub.Messages.Members.Commands;
 
 namespace PoC.MassTransit.VideoClub.App_Start
 {
@@ -75,6 +76,9 @@ namespace PoC.MassTransit.VideoClub.App_Start
 
                 c.CreateMap<RentalModel, CreateRentalCommand>();
                 c.CreateMap<RentalEntity, RentalModel>();
+
+                c.CreateMap<MemberModel, CreateMemberCommand>();
+                c.CreateMap<MemberEntity, MemberModel>();
             });
 
             container.RegisterInstance(config.CreateMapper());
