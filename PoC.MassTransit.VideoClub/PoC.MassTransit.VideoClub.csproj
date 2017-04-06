@@ -219,6 +219,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Controllers\TitlesController.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Rentals\Create.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -254,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Homr\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VideoClub.Common\VideoClub.Common.csproj">
