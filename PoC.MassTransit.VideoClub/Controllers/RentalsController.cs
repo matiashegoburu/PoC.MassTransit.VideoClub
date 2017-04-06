@@ -36,7 +36,28 @@ namespace PoC.MassTransit.VideoClub.Controllers
         {
             var client = new MessageRequestClient<IListRentalsCommand, IListRentalsResponse>(_bus, Endpoints.Rentals, TimeSpan.FromSeconds(10));
             var response = await client.Request(new ListRentalsCommand(), token);
-            var models = _mapper.Map<List<RentalEntity>, List<RentalModel>>(response.Data);
+            var members = await GetMembers(token);
+            var titles = await GetTitles(token);
+            var models = _mapper.Map<List<RentalEntity>, List<RentalModel>>(response.Data, _ => _.AfterMap((src, dest) => 
+            {
+                foreach (var item in src)
+                {
+                    var member = members.Data.SingleOrDefault(s => s.Id == item.MemberId);
+                    if (member != null)
+                    {
+                        var destRental = dest.SingleOrDefault(s => s.Id == item.Id);
+                        destRental.Member = member.Name;
+                    }
+
+                    var title = titles.Data.SingleOrDefault(s => s.Id == item.TitleId);
+                    if (title != null)
+                    {
+                        var destRental = dest.SingleOrDefault(s => s.Id == item.Id);
+                        destRental.Title = title.Title;
+                    }
+
+                }
+            }));
 
             return View(models);
         }
@@ -57,14 +78,14 @@ namespace PoC.MassTransit.VideoClub.Controllers
 
         // POST: Rentals/Create
         [HttpPost]
-        public async Task<ActionResult> Create(RentalModel model, CancellationToken token)
+        public async Task<ActionResult> Create(CreateRentalModel model, CancellationToken token)
         {
             await PopulateTitlesInViewBag(token);
             try
             {
                 // TODO: Add insert logic here
                 var client = new MessageRequestClient<ICreateRentalCommand, ICreateRentalResponse>(_bus, Endpoints.Rentals, TimeSpan.FromSeconds(10));
-                var command = _mapper.Map<RentalModel, CreateRentalCommand>(model);
+                var command = _mapper.Map<CreateRentalModel, CreateRentalCommand>(model);
                 var response = await client.Request(command, token);
 
                 if (response.Success)
@@ -122,17 +143,29 @@ namespace PoC.MassTransit.VideoClub.Controllers
             }
         }
 
-        private async Task PopulateTitlesInViewBag(CancellationToken token)
+        private async Task<Response<List<TitleEntity>>> GetTitles(CancellationToken token)
         {
             var titlesClient = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
             var response = await titlesClient.Request(new ListTitlesCommand(), token);
+            return response;
+        }
+
+        private async Task PopulateTitlesInViewBag(CancellationToken token)
+        {            
+            var response = await GetTitles(token);
             ViewBag.Titulos = response.Data.Select(_ => new SelectListItem { Text = _.Title, Value = _.Id.ToString() });
         }
 
-        private async Task PopulateMembersInViewBag(CancellationToken token)
+        private async Task<IListMembersResponse> GetMembers(CancellationToken token)
         {
             var client = new MessageRequestClient<IListMembersCommand, IListMembersResponse>(_bus, Endpoints.Members, TimeSpan.FromSeconds(10));
             var response = await client.Request(new ListMembersCommand(), token);
+            return response;
+        }
+
+        private async Task PopulateMembersInViewBag(CancellationToken token)
+        {            
+            var response = await GetMembers(token);
             ViewBag.Members = response.Data.Select(_ => new SelectListItem { Text = _.Name, Value = _.Id.ToString() });
         }
     }

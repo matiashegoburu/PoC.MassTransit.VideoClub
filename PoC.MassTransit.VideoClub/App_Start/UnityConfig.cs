@@ -74,8 +74,11 @@ namespace PoC.MassTransit.VideoClub.App_Start
                 c.CreateMap<TitleModel, CreateTitleCommand>();
                 c.CreateMap<TitleEntity, TitleModel>();
 
-                c.CreateMap<RentalModel, CreateRentalCommand>();
-                c.CreateMap<RentalEntity, RentalModel>();
+                c.CreateMap<CreateRentalModel, CreateRentalCommand>();
+
+                c.CreateMap<RentalEntity, RentalModel>()
+                .ForMember(d => d.Member, s => s.Ignore())
+                .ForMember(d => d.Title, s => s.Ignore());
 
                 c.CreateMap<MemberModel, CreateMemberCommand>();
                 c.CreateMap<MemberEntity, MemberModel>();
