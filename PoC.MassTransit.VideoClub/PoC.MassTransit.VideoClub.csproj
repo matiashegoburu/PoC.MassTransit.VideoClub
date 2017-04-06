@@ -244,6 +244,7 @@
     <Content Include="Views\Rentals\Index.cshtml" />
     <Content Include="Views\Rentals\Create.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

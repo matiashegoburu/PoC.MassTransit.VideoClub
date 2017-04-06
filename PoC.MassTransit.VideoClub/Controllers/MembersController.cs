@@ -47,20 +47,20 @@ namespace PoC.MassTransit.VideoClub.Controllers
         }
 
         // GET: Members/Create
-        public async Task<ActionResult> Create(CancellationToken token)
+        public ActionResult Create(CancellationToken token)
         {
             return View();
         }
 
         // POST: Members/Create
         [HttpPost]
-        public async Task<ActionResult> Create(RentalModel model, CancellationToken token)
+        public async Task<ActionResult> Create(MemberModel model, CancellationToken token)
         {
             try
             {
                 // TODO: Add insert logic here
                 var client = new MessageRequestClient<ICreateMemberCommand, ICreateMemberResponse>(_bus, Endpoints.Members, TimeSpan.FromSeconds(10));
-                var command = _mapper.Map<RentalModel, CreateMemberCommand>(model);
+                var command = _mapper.Map<MemberModel, CreateMemberCommand>(model);
                 var response = await client.Request(command, token);
 
                 if (response.Success)

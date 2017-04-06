@@ -11,6 +11,8 @@ using System.Web.Mvc;
 using VideoClub.Common;
 using VideoClub.Entities;
 using VideoClub.Messages;
+using VideoClub.Messages.Members.Commands;
+using VideoClub.Messages.Members.Responses;
 using VideoClub.Messages.Rentals.Commands;
 using VideoClub.Messages.Rentals.Responses;
 using VideoClub.Messages.Titles;
@@ -49,6 +51,7 @@ namespace PoC.MassTransit.VideoClub.Controllers
         public async Task<ActionResult> Create(CancellationToken token)
         {
             await PopulateTitlesInViewBag(token);
+            await PopulateMembersInViewBag(token);
             return View();
         }
 
@@ -124,6 +127,13 @@ namespace PoC.MassTransit.VideoClub.Controllers
             var titlesClient = new MessageRequestClient<ListTitlesMessage, Response<List<TitleEntity>>>(_bus, Endpoints.Titles, TimeSpan.FromSeconds(30));
             var response = await titlesClient.Request(new ListTitlesCommand(), token);
             ViewBag.Titulos = response.Data.Select(_ => new SelectListItem { Text = _.Title, Value = _.Id.ToString() });
+        }
+
+        private async Task PopulateMembersInViewBag(CancellationToken token)
+        {
+            var client = new MessageRequestClient<IListMembersCommand, IListMembersResponse>(_bus, Endpoints.Members, TimeSpan.FromSeconds(10));
+            var response = await client.Request(new ListMembersCommand(), token);
+            ViewBag.Members = response.Data.Select(_ => new SelectListItem { Text = _.Name, Value = _.Id.ToString() });
         }
     }
 }
